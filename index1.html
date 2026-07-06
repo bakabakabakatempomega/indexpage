@@ -193,7 +193,7 @@ document.addEventListener("click", (e) => {
         music.play().catch(console.error);
     }
     createConfetti(e.clientX, e.clientY);
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < 10; i++) {
         setTimeout(launchFirework, i * 200);
     }
 });
