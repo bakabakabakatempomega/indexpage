@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday!</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;800&display=swap" rel="stylesheet">
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Poppins,sans-serif;
+}
+
+body{
+overflow:hidden;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:linear-gradient(-45deg,#ff4b8b,#7b5cff,#00c9ff,#ffe259);
+background-size:400% 400%;
+animation:bg 12s ease infinite;
+}
+
+@keyframes bg{
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
+}
+
+.card{
+text-align:center;
+background:rgba(255,255,255,.15);
+backdrop-filter:blur(12px);
+padding:40px;
+border-radius:25px;
+color:white;
+box-shadow:0 15px 35px rgba(0,0,0,.25);
+max-width:700px;
+z-index:2;
+}
+
+h1{
+font-size:4rem;
+animation:bounce 1s infinite alternate;
+}
+
+@keyframes bounce{
+from{transform:translateY(0);}
+to{transform:translateY(-12px);}
+}
+
+h2{
+margin-top:15px;
+font-size:2rem;
+}
+
+p{
+margin-top:20px;
+font-size:1.2rem;
+line-height:1.7;
+}
+
+.gif{
+position:absolute;
+width:150px;
+animation:float 10s linear infinite;
+opacity:.9;
+}
+
+@keyframes float{
+from{
+transform:translateY(110vh) rotate(0deg);
+}
+to{
+transform:translateY(-150px) rotate(360deg);
+}
+}
+
+.balloon{
+position:absolute;
+font-size:45px;
+animation:rise linear infinite;
+}
+
+@keyframes rise{
+from{
+transform:translateY(120vh);
+}
+to{
+transform:translateY(-100px);
+}
+}
+
+.sparkle{
+position:absolute;
+width:8px;
+height:8px;
+background:white;
+border-radius:50%;
+pointer-events:none;
+animation:fade .8s forwards;
+}
+
+@keyframes fade{
+to{
+opacity:0;
+transform:scale(4);
+}
+
+}
+
+</style>
+
+</head>
+<body>
+
+<div class="card">
+
+<h1>🎉 Happy Birthday 🎉</h1>
+
+<h2>Best Buddy!</h2>
+
+<p>
+May your year be filled with joy,
+crazy adventures,
+lots of cake 🍰 (cause why not?),
+and unforgettable memories.
+Wishing you the happiest birthday ever!✨
+
+PS: I never forget XD
+</p>
+
+</div>
+
+<!-- Background Music -->
+<audio id="music" loop>
+<source src="birthday.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+
+const music = document.getElementById("music");
+let musicStarted = false;
+
+const gifs=[
+"https://media.giphy.com/media/l4FGI8GoTL7N4DsyI/giphy.gif",
+"https://media.giphy.com/media/3o6fJ1BM7R2EBRDnxK/giphy.gif",
+"https://media.giphy.com/media/xT9IgzoKnwFNmISR8I/giphy.gif",
+"https://media.giphy.com/media/26BRv0ThflsHCqDrG/giphy.gif"
+];
+
+function random(min,max){
+    return Math.random()*(max-min)+min;
+    }
+    for(let i=0;i<10;i++){
+        let img=document.createElement("img");
+        img.src=gifs[Math.floor(Math.random()*gifs.length)];
+        img.className="gif";
+        img.style.left=random(0,95)+"vw";
+        img.style.animationDuration=random(8,15)+"s";
+        img.style.animationDelay=random(-15,0)+"s";
+        document.body.appendChild(img);
+    }
+    const balloons=["🎈","🎉","🎊","💖","⭐","✨"];
+    for(let i=0;i<40;i++){
+        let b=document.createElement("div");
+        b.className="balloon";
+        b.innerHTML=balloons[Math.floor(Math.random()*balloons.length)];
+        b.style.left=random(0,100)+"vw";
+        b.style.animationDuration=random(5,12)+"s";
+        b.style.animationDelay=random(-12,0)+"s";
+        document.body.appendChild(b);
+    }
+        document.addEventListener("mousemove",e=>{
+        let s=document.createElement("div");
+        s.className="sparkle";
+        s.style.left=e.pageX+"px";
+        s.style.top=e.pageY+"px";
+        document.body.appendChild(s);
+        setTimeout(()=>s.remove(),800);
+});
+
+//eventlistener
+
+document.addEventListener("click", (e) => {
+    if (!musicStarted) {
+        musicStarted = true;
+        music.play().catch(console.error);
+    }
+    createConfetti(e.clientX, e.clientY);
+    for (let i = 0; i < 3; i++) {
+        setTimeout(launchFirework, i * 200);
+    }
+});
+
+function createConfetti(x, y) {
+    const colors = [
+        "#ff4b8b",
+        "#00c9ff",
+        "#ffe259",
+        "#7b5cff",
+        "#00ff88",
+        "#ffffff"
+    ];
+
+    for (let i = 0; i < 60; i++) {
+
+        const piece = document.createElement("div");
+
+        piece.style.position = "fixed";
+        piece.style.left = x + "px";
+        piece.style.top = y + "px";
+        piece.style.width = "8px";
+        piece.style.height = "8px";
+        piece.style.background =
+            colors[Math.floor(Math.random() * colors.length)];
+        piece.style.pointerEvents = "none";
+        piece.style.borderRadius = "2px";
+        piece.style.zIndex = "9999";
+
+        document.body.appendChild(piece);
+
+        const angle = Math.random() * Math.PI * 2;
+        const distance = 80 + Math.random() * 150;
+
+        piece.animate([
+            {
+                transform: "translate(0,0) rotate(0deg)",
+                opacity: 1
+            },
+            {
+                transform:
+                    `translate(${Math.cos(angle) * distance}px,
+                    ${Math.sin(angle) * distance}px)
+                    rotate(${720 * Math.random()}deg)`,
+                opacity: 0
+            }
+        ], {
+            duration: 1200,
+            easing: "cubic-bezier(.2,.8,.2,1)"
+        });
+
+        setTimeout(() => piece.remove(), 1200);
+    }
+}
+
+function launchFirework() {
+
+    const rocket = document.createElement("div");
+
+    rocket.style.position = "fixed";
+    rocket.style.left = (10 + Math.random() * 80) + "vw";
+    rocket.style.bottom = "-20px";
+    rocket.style.width = "4px";
+    rocket.style.height = "20px";
+    rocket.style.background = "white";
+    rocket.style.borderRadius = "2px";
+    rocket.style.pointerEvents = "none";
+    rocket.style.zIndex = "9998";
+
+    document.body.appendChild(rocket);
+
+    const explodeHeight = 20 + Math.random() * 40;
+
+    rocket.animate([
+        {
+            transform: "translateY(0)"
+        },
+        {
+            transform: `translateY(-${window.innerHeight * explodeHeight / 100}px)`
+        }
+    ], {
+        duration: 900,
+        easing: "ease-out"
+    });
+
+    setTimeout(() => {
+
+        const rect = rocket.getBoundingClientRect();
+        const x = rect.left;
+        const y = rect.top;
+
+        rocket.remove();
+
+        createConfetti(x, y);
+
+    }, 900);
+}
+
+
+</script>
+
+</body>
+</html>
